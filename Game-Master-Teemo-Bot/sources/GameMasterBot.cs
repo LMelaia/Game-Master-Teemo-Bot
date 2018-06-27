@@ -22,7 +22,7 @@ namespace Game_Master_Teemo_Bot {
 
         public GameMasterBot(string jsonBotDefinitions) {
             definitions = JsonConvert.DeserializeObject<BotDefinitions>(
-                new StreamReader("properties\\" + jsonBotDefinitions).ReadToEnd()
+                new StreamReader("..\\..\\bot_properties\\" + jsonBotDefinitions).ReadToEnd()
             );
         }
         
@@ -35,7 +35,7 @@ namespace Game_Master_Teemo_Bot {
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
 
-            string botToken = definitions.Token;//"NDU3OTE4OTgxNDg0MDUyNDgy.DggRaw.NgG1TvZYyePAwfPOzB1YwdYQ984";
+            string botToken = definitions.Token;
 
             _client.Log += Log;
 
