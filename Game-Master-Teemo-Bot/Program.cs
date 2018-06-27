@@ -10,8 +10,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Game_Master_Teemo_Bot {
+
+    /// <summary>
+    /// Entry point class.
+    /// 
+    /// This class simply starts the bot.
+    /// </summary>
     class Program {
 
+        /// <summary>
+        /// Starts the bot async.
+        /// </summary>
+        /// 
+        /// <param name="args"></param>
         static void Main(string[] args) => new GameMasterBot("bot_definitions.json").RunBotAsync().GetAwaiter().GetResult();
 
     }
