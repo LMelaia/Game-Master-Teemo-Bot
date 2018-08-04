@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.IO;
+using static TeetoBot.Sources.Logger;
 
-namespace Game_Master_Teemo_Bot {
+namespace TeetoBot.Sources {
 
     /// <summary>
     /// Bot class.
@@ -16,7 +17,12 @@ namespace Game_Master_Teemo_Bot {
     /// Provides the bots start method
     /// and initialization routine.
     /// </summary>
-    class GameMasterBot {
+    public class _TeetoBot {
+
+        /// <summary>
+        /// Logger for the application.
+        /// </summary>
+        private readonly Logger logger = new Logger();
 
         /// <summary>
         /// Discord socket connection.
@@ -50,7 +56,7 @@ namespace Game_Master_Teemo_Bot {
         /// This file must be located in a folder called "bot_cfg"
         /// in the root directory of the project.
         /// </param>
-        public GameMasterBot(string jsonBotDefinitions) {
+        public _TeetoBot(string jsonBotDefinitions) {
             Definitions = JsonConvert.DeserializeObject<BotDefinitions>(
                 new StreamReader("..\\..\\bot_cfg\\" + jsonBotDefinitions).ReadToEnd()
             );
@@ -73,7 +79,15 @@ namespace Game_Master_Teemo_Bot {
             await RegisterCommandsAsync();
             await _client.LoginAsync(Discord.TokenType.Bot, Definitions.Token);
             await _client.StartAsync();
+            getLogger().Log(Logger.Level.INFO, "Bot is starting...");
             await Task.Delay(-1);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>The logger for the application.</returns>
+        public Logger getLogger() {
+            return logger;
         }
 
         /// <summary>
@@ -83,7 +97,8 @@ namespace Game_Master_Teemo_Bot {
         /// <param name="arg">The message.</param>
         /// <returns>The async task.</returns>
         private Task Log(LogMessage arg) {
-            Console.WriteLine(arg);
+            getLogger().Log(Logger.Level.INFO, arg);
+            //Console.WriteLine(arg);
             return Task.CompletedTask;
         }
 
@@ -117,11 +132,17 @@ namespace Game_Master_Teemo_Bot {
 
             foreach(string commandPrefix in Definitions.CommandPrefixes) {
                 if(usrMessage.HasStringPrefix(commandPrefix, ref argPos)){
+                    logger.Log(Level.INFO, "Command requested: \"" + usrMessage.ToString() + "\" from: " + usrMessage.Author.Username);
+
+                    if(usrMessage.ToString().Replace(commandPrefix, "").Length == 0) {
+                        await usrMessage.Channel.SendMessageAsync("Use " + commandPrefix + " help for a list of commands and how to use them.");
+                    }
+                    
                     await ExecuteCommand(usrMessage, argPos);
                 }
             }
         }
-
+        
         /// <summary>
         /// Executes a command within a message from a user.
         /// </summary>

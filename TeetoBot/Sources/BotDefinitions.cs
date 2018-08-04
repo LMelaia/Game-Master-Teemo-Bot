@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game_Master_Teemo_Bot {
+namespace TeetoBot.Sources {
 
     /// <summary>
     /// Holds the defining configuration properties of the bot.
@@ -18,10 +18,10 @@ namespace Game_Master_Teemo_Bot {
     ///     "Name": "The name of the bot",
     ///     "Token": "Your private token.somethingsomething",
     ///     "Version": "1.something omega",
-    ///     "CommandPrefixes": ["cmdprefix!", "anothercmdprefix", "and another :) "]
+    ///     "CommandPrefixes": ["cmdprefix!", "anothercmdprefix", "and another :) ", "--"]
     /// }
     /// </summary>
-    class BotDefinitions {
+    public class BotDefinitions {
         
         /// <summary>
         /// The display name of the bot. 

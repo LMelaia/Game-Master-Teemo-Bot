@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game_Master_Teemo_Bot.Modules {
+namespace TeetoBot.Sources.Modules {
 
     /// <summary>
     /// Hello world command.
@@ -16,7 +16,7 @@ namespace Game_Master_Teemo_Bot.Modules {
         /// Prints a hello world message to the user who issued the command.
         /// </summary>
         /// <returns></returns>
-        [Command("Notice Me")]
+        [Command("notice me")]
         public async Task Command() {
             await ReplyAsync("Your senpai notices you!");
         }

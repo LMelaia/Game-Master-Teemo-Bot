@@ -19,11 +19,11 @@ namespace Game_Master_Teemo_Bot {
     class Program {
 
         /// <summary>
-        /// Starts the bot async.
+        /// Starts the bot.
         /// </summary>
         /// 
         /// <param name="args"></param>
-        static void Main(string[] args) => new GameMasterBot("bot_definitions.json").RunBotAsync().GetAwaiter().GetResult();
+        static void Main(string[] args) => new TeetoBot.Sources._TeetoBot("bot_definitions.json").RunBotAsync().GetAwaiter().GetResult();
 
     }
 }

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A719CDDD-6CAE-4BEB-9686-6B820203B903}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Game_Master_Teemo_Bot</RootNamespace>
-    <AssemblyName>Game-Master-Teemo-Bot</AssemblyName>
+    <RootNamespace>TeetoBot</RootNamespace>
+    <AssemblyName>TeetoBot</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -145,10 +145,11 @@
   <ItemGroup>
     <Compile Include="Sources\BotDefinitions.cs" />
     <Compile Include="Sources\Logger.cs" />
-    <Compile Include="Sources\Modules\MNoticeMe.cs" />
+    <Compile Include="Sources\Modules\_NoticeMe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sources\TeemoBot.cs" />
+    <Compile Include="Sources\Modules\_Help.cs" />
+    <Compile Include="Sources\_TeetoBot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
