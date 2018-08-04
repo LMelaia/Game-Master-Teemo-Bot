@@ -9,10 +9,10 @@ namespace TeetoBot.Sources.Modules {
     public class _Help : ModuleBase<SocketCommandContext> {
 
         /// <summary>
-        /// Prints a hello world message to the user who issued the command.
+        /// Help Command. Display bot help message and commands.
         /// </summary>
         /// <returns></returns>
-        [Command("help me")]
+        [Command("help")]
         public async Task Command() {
             await ReplyAsync("Fuck off");
         }

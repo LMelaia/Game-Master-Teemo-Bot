@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,16 @@ namespace TeetoBot.Sources {
     /// Provides basic logging to the console and specified discord users.
     /// </summary>
     public class Logger {
+
+        /// <summary>
+        /// The file to write the logs to.
+        /// </summary>
+        private static readonly String LOG_FILE = "logs\\" + getTimeStamp().Replace(":", "_") + ".log";
+
+        /// <summary>
+        /// The stream writer to the log file.
+        /// </summary>
+        private static readonly StreamWriter FILE = new StreamWriter("..\\..\\" + LOG_FILE);
 
         /// <summary>
         /// The level for the logged message.
@@ -87,13 +98,18 @@ namespace TeetoBot.Sources {
             Console.WriteLine("[" + level.ToString().ToLower() + "] "
                               + "[" + getTimeStamp() + "] "
                               + "- " + message);
+
+            FILE.WriteLine("[" + level.ToString().ToLower() + "] "
+                              + "[" + getTimeStamp() + "] "
+                              + "- " + message);
+            FILE.Flush();
         }
 
         /// <summary>
         /// Returns a timestamp of the current time.
         /// </summary>
         /// <returns>The current time in the format: d MMM ddd yyyy HH:mm:ss.</returns>
-        private String getTimeStamp() {
+        private static String getTimeStamp() {
             DateTime time = DateTime.Now;
             string format = "d MMM ddd yyyy HH:mm:ss";
             return time.ToString(format);
