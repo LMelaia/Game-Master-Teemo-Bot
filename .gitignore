@@ -259,6 +259,16 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/TeetoBot/bot_properties/bot_definitions.json
-/TeetoBot/bot_cfg/bot_definitions.json
-/TeetoBot/logs/
+
+#######################
+#    USER DEFINED     #
+#######################
+
+# Audio Files
+/TeetoBot/bin/Audio/
+
+# Contains private bot token
+/TeetoBot/bin/Configuration/Bot.json
+
+# Log files
+/TeetoBot/bin/Logs/

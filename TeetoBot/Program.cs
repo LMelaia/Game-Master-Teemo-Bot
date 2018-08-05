@@ -23,7 +23,8 @@ namespace Game_Master_Teemo_Bot {
         /// </summary>
         /// 
         /// <param name="args"></param>
-        static void Main(string[] args) => new TeetoBot.Sources._TeetoBot("bot_definitions.json").RunBotAsync().GetAwaiter().GetResult();
-
+        static void Main(string[] args) {
+            new TeetoBot.Sources._TeetoBot("Bot.json").RunBotAsync().GetAwaiter().GetResult();
+        }
     }
 }

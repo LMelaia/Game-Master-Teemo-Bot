@@ -14,48 +14,13 @@ namespace TeetoBot.Sources {
         /// <summary>
         /// The file to write the logs to.
         /// </summary>
-        private static readonly String LOG_FILE = "logs\\" + getTimeStamp().Replace(":", "_") + ".log";
+        private static readonly String LOG_FILE = "Logs\\" + getTimeStamp().Replace(":", "_") + ".log";
 
         /// <summary>
         /// The stream writer to the log file.
         /// </summary>
         private static readonly StreamWriter FILE = new StreamWriter("..\\..\\" + LOG_FILE);
-
-        /// <summary>
-        /// The level for the logged message.
-        /// </summary>
-        public enum Level {
-            /// <summary>
-            /// Trace level priority. Lowest priority.
-            /// </summary>
-            TRACE,
-            /// <summary>
-            /// Debug level priority. Second lowest priority.
-            /// </summary>
-            DEBUG,
-            /// <summary>
-            /// General logging level. 
-            /// </summary>
-            INFO,
-            /// <summary>
-            /// Warning level priority. Indicates a failure
-            /// and alerts a user of the message.
-            /// </summary>
-            WARN,
-            /// <summary>
-            /// Error level priority. Indicates a failure
-            /// and alerts a user of the message.
-            /// </summary>
-            ERROR,
-            /// <summary>
-            /// Fatal level priority. Indicates a failure
-            /// and alerts a user of the message. This level
-            /// indicates the application cannot continue and
-            /// needs to be restarted.
-            /// </summary>
-            FATAL
-        };
-
+        
         /// <summary>
         /// Logs a message to the console, and any user specified
         /// to receive logging events.
@@ -63,10 +28,6 @@ namespace TeetoBot.Sources {
         /// <param name="level">The priority of the message.</param>
         /// <param name="message">The message to log.</param>
         public void Log(Level level, Object message) {
-            if(LevelPriority(level) > 2) {
-
-            }
-
             _Log(level, message.ToString());
         }
 
@@ -78,12 +39,13 @@ namespace TeetoBot.Sources {
         /// <returns>The integer value of the logging level.</returns>
         private int LevelPriority(Level level) {
             switch (level) {
-                case Level.TRACE: return 0;
-                case Level.DEBUG: return 1;
-                case Level.INFO: return 2;
-                case Level.WARN: return 3;
-                case Level.ERROR: return 4;
-                case Level.FATAL: return 5;
+                case Level.DISCORD: return 0;
+                case Level.TRACE: return 1;
+                case Level.DEBUG: return 2;
+                case Level.INFO: return 3;
+                case Level.WARN: return 4;
+                case Level.ERROR: return 5;
+                case Level.FATAL: return 6;
             };
 
             return 0;
@@ -114,5 +76,44 @@ namespace TeetoBot.Sources {
             string format = "d MMM ddd yyyy HH:mm:ss";
             return time.ToString(format);
         }
+
+        /// <summary>
+        /// The level for the logged message.
+        /// </summary>
+        public enum Level {
+            /// <summary>
+            /// Indicates the log came from Discord.net.
+            /// </summary>
+            DISCORD,
+            /// <summary>
+            /// Trace level priority. Lowest priority.
+            /// </summary>
+            TRACE,
+            /// <summary>
+            /// Debug level priority. Second lowest priority.
+            /// </summary>
+            DEBUG,
+            /// <summary>
+            /// General logging level. 
+            /// </summary>
+            INFO,
+            /// <summary>
+            /// Warning level priority. Indicates a failure
+            /// and alerts a user of the message.
+            /// </summary>
+            WARN,
+            /// <summary>
+            /// Error level priority. Indicates a failure
+            /// and alerts a user of the message.
+            /// </summary>
+            ERROR,
+            /// <summary>
+            /// Fatal level priority. Indicates a failure
+            /// and alerts a user of the message. This level
+            /// indicates the application cannot continue and
+            /// needs to be restarted.
+            /// </summary>
+            FATAL
+        };
     }
 }

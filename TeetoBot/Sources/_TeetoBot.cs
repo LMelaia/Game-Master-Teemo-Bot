@@ -20,6 +20,23 @@ namespace TeetoBot.Sources {
     public class _TeetoBot {
 
         /// <summary>
+        /// Static instance of this class.
+        /// </summary>
+        private static _TeetoBot INSTANCE;
+
+        /// <summary>
+        /// Gets the current bot instance.
+        /// </summary>
+        /// <returns>The static instance of the bot, or throws
+        /// an exception if the bot is not yet initialized.</returns>
+        public static _TeetoBot GetCurrentInstance() {
+            if (INSTANCE == null)
+                throw new InvalidOperationException("Bot not yet initialized");
+
+            return INSTANCE;
+        }
+
+        /// <summary>
         /// Logger for the application.
         /// </summary>
         private readonly Logger logger = new Logger();
@@ -58,7 +75,7 @@ namespace TeetoBot.Sources {
         /// </param>
         public _TeetoBot(string jsonBotDefinitions) {
             Definitions = JsonConvert.DeserializeObject<BotDefinitions>(
-                new StreamReader("..\\..\\bot_cfg\\" + jsonBotDefinitions).ReadToEnd()
+                new StreamReader("..\\..\\Configuration\\" + jsonBotDefinitions).ReadToEnd()
             );
         }
         
@@ -73,8 +90,11 @@ namespace TeetoBot.Sources {
             _services = new ServiceCollection()
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
+                .AddSingleton(new AudioService())
                 .BuildServiceProvider();
             _client.Log += Log;
+
+            INSTANCE = this;
 
             await RegisterCommandsAsync();
             await _client.LoginAsync(Discord.TokenType.Bot, Definitions.Token);
@@ -97,7 +117,7 @@ namespace TeetoBot.Sources {
         /// <param name="arg">The message.</param>
         /// <returns>The async task.</returns>
         private Task Log(LogMessage arg) {
-            getLogger().Log(Logger.Level.INFO, arg);
+            getLogger().Log(Logger.Level.DISCORD, arg.ToString().Substring(9));
             //Console.WriteLine(arg);
             return Task.CompletedTask;
         }
