@@ -34,7 +34,7 @@ namespace TeetoBot.Sources.Modules {
         /// <returns></returns>
         [Command("take me to hell", RunMode = RunMode.Async)]
         public async Task TakeMeToHellCommand() {
-            await _service.LeaveAudio(Context.Guild);
+            await _service.LeaveAudioAsync(Context.Guild);
 
             IGuildChannel channel= null;
             IReadOnlyCollection<IGuildChannel> collection = await Context.Guild.GetVoiceChannelsAsync();
@@ -62,7 +62,7 @@ namespace TeetoBot.Sources.Modules {
             await Context.Channel.SendMessageAsync("I have taken " + (Context.User as IGuildUser).Username + " to hell, where they shall be tortured in an infinite loop for the cancer they have mained.");
             await Context.User.SendMessageAsync("You died");
 
-            await _service.JoinAudio(Context.Guild, channel as IVoiceChannel);
+            await _service.JoinAudioAsync(Context.Guild, channel as IVoiceChannel);
             await _service.LoopAudioAsync(Context.Guild, Context.Channel, "Nyan");
         }
 
@@ -87,7 +87,7 @@ namespace TeetoBot.Sources.Modules {
                 return;
             }
 
-            await _service.JoinAudio(Context.Guild, channel as IVoiceChannel);
+            await _service.JoinAudioAsync(Context.Guild, channel as IVoiceChannel);
             await Context.Channel.SendMessageAsync("We'll meet again... soon");
             await _service.LoopAudioAsync(Context.Guild, Context.Channel, "Nyan");
         }
@@ -98,7 +98,7 @@ namespace TeetoBot.Sources.Modules {
         /// <returns></returns>
         [Command("fuck off", RunMode = RunMode.Async)]
         public async Task LeaveCmd() {
-            await _service.LeaveAudio(Context.Guild);
+            await _service.LeaveAudioAsync(Context.Guild);
             await Context.Channel.SendMessageAsync("You have not seen the last of me...");
         }
 

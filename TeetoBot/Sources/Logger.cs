@@ -33,7 +33,7 @@ namespace TeetoBot.Sources {
 
         /// <summary>
         /// Gets the integer value of the level. 0 is lowest or
-        /// trace and 5 is highest or FATAL.
+        /// discord and 6 is highest or FATAL.
         /// </summary>
         /// <param name="level">The logging level.</param>
         /// <returns>The integer value of the logging level.</returns>

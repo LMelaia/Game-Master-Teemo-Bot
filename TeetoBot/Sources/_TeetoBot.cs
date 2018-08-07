@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.IO;
 using static TeetoBot.Sources.Logger;
+using System.Collections.Generic;
 
 namespace TeetoBot.Sources {
 
@@ -95,18 +96,54 @@ namespace TeetoBot.Sources {
             _client.Log += Log;
 
             INSTANCE = this;
-
+            
             await RegisterCommandsAsync();
             await _client.LoginAsync(Discord.TokenType.Bot, Definitions.Token);
             await _client.StartAsync();
-            getLogger().Log(Logger.Level.INFO, "Bot is starting...");
+            GetLogger().Log(Logger.Level.INFO, "Bot is starting...");
+
+            bool rdy = false;
+            _client.Ready += async () => {
+                rdy = true;
+            };
+
+            label: //Got to love this...
+            if (!rdy) {
+                await Task.Delay(1000);
+                goto label;
+            }
+
+            foreach (IGuild guild in _client.Guilds) {
+                GetLogger().Log(Level.INFO, "Found guild: " + guild.Name);
+                if (guild.Name.Equals("For All The Rejects")) {
+                    GetLogger().Log(Level.INFO, "Auto joining: " + guild.Name);
+                    IGuildChannel channel = null;
+                    IReadOnlyCollection<IGuildChannel> collection = await guild.GetVoiceChannelsAsync();
+                    IMessageChannel messageChannel = guild.GetDefaultChannelAsync() as IMessageChannel;
+
+                    foreach (IGuildChannel channelA in collection) {
+                        if (channelA.Name.Equals("Hell")) {
+                            channel = channelA;
+                        }
+                    }
+
+                    if (channel == null) {
+                        return;
+                    }
+
+                    await AudioService.GetInstance().LeaveAudioAsync(guild);
+                    await AudioService.GetInstance().JoinAudioAsync(guild, channel as IVoiceChannel);
+                    await AudioService.GetInstance().LoopAudioAsync(guild, messageChannel, "Nyan");
+                }
+            }
+            
             await Task.Delay(-1);
         }
 
         /// <summary>
         /// </summary>
         /// <returns>The logger for the application.</returns>
-        public Logger getLogger() {
+        public Logger GetLogger() {
             return logger;
         }
 
@@ -117,7 +154,7 @@ namespace TeetoBot.Sources {
         /// <param name="arg">The message.</param>
         /// <returns>The async task.</returns>
         private Task Log(LogMessage arg) {
-            getLogger().Log(Logger.Level.DISCORD, arg.ToString().Substring(9));
+            GetLogger().Log(Logger.Level.DISCORD, arg.ToString().Substring(9));
             //Console.WriteLine(arg);
             return Task.CompletedTask;
         }
@@ -152,7 +189,8 @@ namespace TeetoBot.Sources {
 
             foreach(string commandPrefix in Definitions.CommandPrefixes) {
                 if(usrMessage.HasStringPrefix(commandPrefix, ref argPos)){
-                    logger.Log(Level.INFO, "Command requested: \"" + usrMessage.ToString() + "\" from: " + usrMessage.Author.Username);
+                    logger.Log(Level.INFO, "Command requested: \"" + usrMessage.ToString()
+                        + "\" from: \"" + usrMessage.Author.Username + "\" in: \"" + usrMessage.Channel + "\"");
 
                     if(usrMessage.ToString().Replace(commandPrefix, "").Length == 0) {
                         await usrMessage.Channel.SendMessageAsync("Use " + commandPrefix + " help for a list of commands and how to use them.");
