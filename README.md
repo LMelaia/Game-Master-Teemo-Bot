@@ -1,8 +1,18 @@
-# Game-Master-Teemo-Bot
+# Teeto Bot
 
-## A Discord bot created for a private server.
+## A simple Discord bot created as a joke for a personal/private discord server.
 
-Provides some special commands for the server,
-the ability to play a defined song on repeat in a voice channel (as a joke).
-and some other commands and features.
-Some are a joke, some are for personal use and some are for the channel.
+The bot provides a couple joke commands and the ability to
+sit in a channel and repeatedly play the same song.
+
+## Important
+The bot requires 5 external dependencies in the same
+folder as the executable.
+These dependencies allow the bot to play audio
+in a discord channel:
+
+ * libopus.dll (as opus.dll)
+ * libopus.dll.checksums (as opus.dll.checksums)
+ * libsodium.dll
+ * libsodium.dll.checksums
+ * ffmpeg.exe
