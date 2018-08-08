@@ -136,6 +136,14 @@ namespace TeetoBot.Sources {
                     await AudioService.GetInstance().LoopAudioAsync(guild, messageChannel, "Nyan");
                 }
             }
+
+            _client.LoggedOut += async () => {
+                GetLogger().Log(Level.WARN, "Logged out");
+            };
+
+            _client.Disconnected += async (e) => {
+                GetLogger().Log(Level.WARN, "Disconnected" + e.ToString());
+            };
             
             await Task.Delay(-1);
         }
