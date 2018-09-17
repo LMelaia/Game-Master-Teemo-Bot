@@ -1,5 +1,8 @@
 # Teeto Bot
 
+# Discontinued
+This project has been discontinued in favour of TeetoBot4J.
+
 ## A simple Discord bot created as a joke for a personal/private discord server.
 
 The bot provides a couple joke commands and the ability to
